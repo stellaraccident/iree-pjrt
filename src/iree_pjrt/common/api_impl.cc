@@ -4,20 +4,21 @@
 // See https://llvm.org/LICENSE.txt for license information.
 // SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 
-#include "iree/integrations/pjrt/common/api_impl.h"
+#include "iree_pjrt/common/api_impl.h"
 
 #include <optional>
 
 #include "iree/hal/api.h"
-#include "iree/integrations/pjrt/common/iree_helpers.h"
-#include "iree/integrations/pjrt/common/tensor_utils.h"
-#include "xla/pjrt/transpose.h"
+#include "iree_pjrt/common/iree_helpers.h"
+#include "iree_pjrt/common/tensor_utils.h"
+// TODO: Excise. Uses deep XLA internals.
+// #include "xla/pjrt/transpose.h"
 
 using iree::vm::retain_ref;
 
 namespace iree::pjrt {
 
-const absl::string_view kMlirFormat = "mlir";
+const std::string_view kMlirFormat = "mlir";
 
 // Some general conversion functions for managing around some API layering
 // that is in flight. It is expected that most of this goes away over time.

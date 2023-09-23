@@ -9,21 +9,26 @@
 
 #include <atomic>
 #include <memory>
+#include <mutex>
 #include <string>
 #include <string_view>
+#include <thread>
 #include <vector>
 
 #include "iree/base/api.h"
 #include "iree/hal/api.h"
-#include "iree/integrations/pjrt/common/compiler.h"
-#include "iree/integrations/pjrt/common/platform.h"
+#include "iree_pjrt/common/compiler.h"
+#include "iree_pjrt/common/platform.h"
 #include "iree/modules/hal/module.h"
 #include "iree/vm/api.h"
 #include "iree/vm/bytecode/module.h"
 #include "xla/pjrt/c/pjrt_c_api.h"
-#include "xla/pjrt/c/pjrt_c_api_helpers.h"
-#include "xla/pjrt/pjrt_executable.h"
-#include "xla/shape_util.h"
+// TODO: Excise. Various deep dependencies on XLA internals.
+// #include "xla/pjrt/c/pjrt_c_api_helpers.h"
+// TODO: Excise. Various deep dependencies on XLA internals.
+// #include "xla/pjrt/pjrt_executable.h"
+// TODO: Excise. Various deep dependencies on XLA internals.
+// #include "xla/shape_util.h"
 
 namespace iree::pjrt {
 

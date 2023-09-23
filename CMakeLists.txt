@@ -9,6 +9,11 @@ cmake_minimum_required(VERSION 3.21...3.24)
 project(IREE_PJRT)
 cmake_policy(SET CMP0069 NEW)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+set(IREE_CXX_STANDARD ${CMAKE_CXX_STANDARD})
+
 # NOTE: The IREE source code must be cloned to a directory side-by-side with
 # this project.
 # TODO: Change this when it moves in-tree
@@ -35,4 +40,11 @@ option(IREE_BUILD_SAMPLES "Disable samples for runtime-library build" OFF)
 message(STATUS "Including IREE from ${IREE_ROOT_DIR}")
 add_subdirectory("${IREE_ROOT_DIR}" "iree_core" EXCLUDE_FROM_ALL)
 
+# Include local sources.
+# Handle various global definitions that need to be set at the global
+# toolchain level.
+iree_setup_toolchain()
+
 add_subdirectory(src)
+
+add_subdirectory(third_party/pjrt_c_api)
