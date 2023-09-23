@@ -20,8 +20,23 @@ iree_cc_library(
   DEPS
     ::compiler
     iree::base
+    iree::hal
+    iree::modules::hal
+    iree::vm
+    iree::vm::bytecode::module
     iree_pjrt_deps::headers
   PUBLIC
+)
+
+iree_cc_test(
+  NAME
+    tensor_utils_test
+  SRCS
+    "tensor_utils_test.cc"
+  DEPS
+    ::common
+    iree::testing::gtest
+    iree::testing::gtest_main
 )
 
 iree_cc_library(
@@ -37,6 +52,7 @@ iree_cc_library(
       iree::compiler::bindings::c::headers
       iree::compiler::bindings::c::loader
       iree_pjrt::partitioner_api
+      iree_pjrt::partitioner_api::loader
     PUBLIC
 )
 

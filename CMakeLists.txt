@@ -14,6 +14,15 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(IREE_CXX_STANDARD ${CMAKE_CXX_STANDARD})
 
+enable_testing()
+
+# This project uses explicit symbol visibility.
+set(CMAKE_C_VISIBILITY_PRESET "hidden")
+set(CMAKE_CXX_VISIBILITY_PRESET "hidden")
+
+# All python binaries go into one tree.
+set(IREE_PJRT_PYTHON_BINARY_DIR "${CMAKE_CURRENT_BINARY_DIR}/python")
+
 # NOTE: The IREE source code must be cloned to a directory side-by-side with
 # this project.
 # TODO: Change this when it moves in-tree
@@ -46,5 +55,34 @@ add_subdirectory("${IREE_ROOT_DIR}" "iree_core" EXCLUDE_FROM_ALL)
 iree_setup_toolchain()
 
 add_subdirectory(src)
-
 add_subdirectory(third_party/pjrt_c_api)
+
+#-------------------------------------------------------------------------------
+# Convenience test target.
+#-------------------------------------------------------------------------------
+
+add_custom_target(iree-pjrt-test-deps)
+
+set(IREE_PJRT_CTEST_ARGS "-L;^iree_pjrt.+")
+add_custom_target(iree-pjrt-run-tests
+  COMMENT
+    "Run IREE PJRT Tests"
+    WORKING_DIRECTORY
+    "${CMAKE_CURRENT_BINARY_DIR}"
+  USES_TERMINAL
+  VERBATIM
+  COMMAND_EXPAND_LISTS
+  COMMAND
+    "${CMAKE_COMMAND}" -E echo
+    "The 'iree-pjrt-run-tests' target is a helper for running ctest. For advanced"
+    "options, build dependencies and invoke ctest independently as in:"
+  COMMAND
+    "${CMAKE_COMMAND}" -E echo
+    "  (cd ${CMAKE_CURRENT_BINARY_DIR} && cmake --build . --target iree-pjrt-run-tests && ctest ${IREE_PJRT_CTEST_ARGS} --output-on-failure)"
+  COMMAND
+    "${CMAKE_COMMAND}" -E echo
+    "Run tests in parallel by setting a variable like CTEST_PARALLEL_LEVEL=25."
+  COMMAND
+    "${CMAKE_CTEST_COMMAND}" ${IREE_PJRT_CTEST_ARGS} --output-on-failure
+)
+add_dependencies(iree-pjrt-run-tests iree-pjrt-test-deps)
