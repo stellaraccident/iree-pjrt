@@ -1,5 +1,7 @@
 # OpenXLA PJRT Plugin
 
+**🚨 This repo is in process of being deprecated. 🚨**
+
 This repository contains an experimental PJRT plugin library which can bridge
 Jax (and TensorFlow in the future) to OpenXLA/IREE.
 
