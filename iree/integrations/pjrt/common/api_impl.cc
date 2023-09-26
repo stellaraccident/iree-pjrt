@@ -1870,7 +1870,7 @@ iree_status_t LoadedExecutableInstance::BatchExecute(
 
 void BindMonomorphicApi(PJRT_Api* api) {
   api->struct_size = PJRT_Api_STRUCT_SIZE;
-  api->priv = nullptr;
+  api->extension_start = nullptr;
 
   // Bind by object types.
   BufferInstance::BindApi(api);

@@ -51,11 +51,11 @@ jobs:
 
       - name: "Build Plugins"
         run: |
-          bazel build :plugins
+          bazel build :plugins --copt=-Wno-error
 
       - name: "Run Unittests"
         run: |
-          bazel test iree/integrations/pjrt/common/...
+          bazel test iree/integrations/pjrt/common/... --copt=-Wno-error
 
       - name: "Test CPU plugin"
         run: |
@@ -67,7 +67,7 @@ jobs:
 
       - name: "Build partitioner"
         run: |
-          bazel build partitioner:libOpenXLAPartitioner.so
+          bazel build partitioner:libOpenXLAPartitioner.so --copt=-Wno-error
 
       - name: "Test CPU plugin (with partitioner)"
         run: |
