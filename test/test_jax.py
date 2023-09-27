@@ -88,8 +88,11 @@ def exec_testsuite(commands, jobs, timeout):
   random.shuffle(commands)
   withTimeout = list(map(lambda x : TestCase(x, timeout), commands))
 
+  if jobs:
+    jobs = int(jobs)
+
   results = []
-  with multiprocessing.Pool(int(jobs)) as p:
+  with multiprocessing.Pool(jobs) as p:
     results = p.map(exec_test, withTimeout)
 
   passing, timeout, failing = [], [], []
