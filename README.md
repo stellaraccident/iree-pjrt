@@ -34,6 +34,7 @@ export IREE_CUDA_DEPS_DIR=${HOME?}/.iree_cuda_deps
 pip install jax openxla_pjrt_plugin_cpu \
   -f https://openxla.github.io/openxla-pjrt-plugin/pip-release-links.html \
   -f https://openxla.github.io/iree/pip-release-links.html
+  -f https://storage.googleapis.com/jax-releases/jaxlib_nightly_releases.html
 ```
 
 Then one can verify & use simply with
